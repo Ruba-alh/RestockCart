@@ -90,9 +90,9 @@ const Products = (props) => {
   } = ReactBootstrap;
   //  Fetch Data
   const { Fragment, useState, useEffect, useReducer } = React;
-  const [query, setQuery] = useState("http://localhost:1337/products");
+  const [query, setQuery] = useState("http://localhost:1337/api/products");
   const [{ data, isLoading, isError }, doFetch] = useDataApi(
-    "http://localhost:1337/products",
+    "http://localhost:1337/api/products",
     {
       data: [],
     }
@@ -159,6 +159,15 @@ const Products = (props) => {
     console.log(`total updated to ${newTotal}`);
     return newTotal;
   };
+  const restockProducts = (url) => {
+    doFetch(url);
+    let newItems = data.map((item) => {
+      let { name, country, cost, instock } = item;
+      return { name, country, cost, instock };
+    });
+    setItems([...items, ...newItems]);
+  };
+
   // TODO: implement the restockProducts function
   const restockProducts = (url) => {};
 
